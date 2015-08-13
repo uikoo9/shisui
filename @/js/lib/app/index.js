@@ -5,7 +5,6 @@ mui.init({
 // 所有方法都放到这里
 mui.plusReady(function(){
 	setColor("#f7f7f7");
-	
 	qiao.on('#choiceImg', 'tap', choiceImg);
 });
 
@@ -16,32 +15,22 @@ function setColor(color){
 
 function choiceImg(){
 	qiao.h.sheet('选择照片', ['拍照','相册'], function(e){
-		switch (e.index){
-			case 0:
-				break;
-			case 1:
-				choiceCamera();
-				break;
-			case 2:
-				choicePic();
-				break;
-		}
+		var index = e.index;
+		if(index == 1) choiceCamera();
+		if(index == 2) choicePic();
 	});
 }
 function choiceCamera(){
 	var cmr = plus.camera.getCamera();
-	cmr.captureImage( function ( p ) {
-		plus.io.resolveLocalFileSystemURL( p, function ( entry ) {
-			$('#choiceImg').attr('src', entry.toLocalURL());
-		}, function ( e ) {
-		} );
-	}, function ( e ) {
-	}, {filename:"_doc/camera/",index:1} );
+	cmr.captureImage(function (p){
+		plus.io.resolveLocalFileSystemURL(p, function(entry){
+			setImg(entry.toLocalURL());
+		}, function(e){});
+	}, function(e){},{index:1,filename:"_doc/camera/"});
 }
 function choicePic(){
-	plus.gallery.pick( function(path){
-    	console.log(path);
-    }, function ( e ) {
-    	console.log( "取消选择图片" );
-    }, {filter:"image"} );
+	plus.gallery.pick(function(path){setImg(path);},function(e){},{filter:'image'});
+}
+function setImg(src){
+	$('#choiceImg').attr('src', src);
 }
