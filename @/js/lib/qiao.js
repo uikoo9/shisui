@@ -42,6 +42,40 @@ qiao.h.fire = function(id, name, values){
 };
 
 // 以下为UI封装------------------------------------------------------------------------------
+// upload
+qiao.h.upload = function(options){
+	if(!options) return;
+	
+	var url = options.url;
+	var filepath = options.filepath;
+	var datas = options.datas || [];
+	var success = options.success;
+	var fail = options.fail;
+	if(url && filepath){
+		var task = plus.uploader.createUpload(url, {
+				method: "POST",
+				blocksize: 204800,
+				priority: 100
+			},
+			function(t, status){
+				if(status == 200){
+					if(success) success(t);
+				}else{
+					if(fail) fail(status);
+				}
+			}
+		);
+		task.addFile(filepath, {key: 'file'});
+		if(datas && datas.length){
+			for(var i=0; i<datas.length; i++){
+				var data = datas[i];
+				task.addData(data.key, data.value);
+			}
+		}
+		task.start();
+	}
+};
+
 // nativeui相关
 qiao.h.tip = function(msg, options){
 	plus.nativeUI.toast(msg,options);
@@ -192,33 +226,49 @@ qiao.h.endDown = function(selector){
 	mui(sel).pullRefresh().endPulldownToRefresh();
 };
 
+// qiniu
 qiao.qiniu = {
 	ak : '3YhXI8s0TsYLyEv_irq7aKGsQsmN6i3WoERBtnyY',
 	sk : '9lWh6588LIrQcrMpTagR0f19KV_BcRvtgu5Z1mFU',
+	pr : 'http://7sbnhi.com1.z0.glb.clouddn.com/',
 	scope : 'uikoo9-ueditor',
 };
 qiao.qiniu.deadline = function(){
 	return Math.round(new Date().getTime() / 1000) + 3600;
 };
-qiao.qiniu.uptoken = function() {
+qiao.qiniu.genScope = function(src){
+	var scope = qiao.qiniu.scope;
+	if(src){
+		var ss = src.split('.');
+		qiao.qiniu.file = qiao.qiniu.uid() + '.' + ss[ss.length - 1];
+		scope = scope + ':' + qiao.qiniu.file;
+	}
+	
+	return scope;
+};
+qiao.qiniu.uid = function(){
+	return Math.floor(Math.random()*100000000+10000000).toString();
+};
+qiao.qiniu.uptoken = function(src) {
     //SETP 1
-	var putPolicy = '{"scope":"' + qiao.qiniu.scope + '","deadline":' + qiao.qiniu.deadline() + '}';
-	console.log(putPolicy);
+	var putPolicy = '{"scope":"' + qiao.qiniu.genScope(src) + '","deadline":' + qiao.qiniu.deadline() + '}';
 
     //SETP 2
     var encoded = qiao.encode.base64encode(qiao.encode.utf16to8(putPolicy));
-    console.log(encoded);
 
     //SETP 3
     var hash = CryptoJS.HmacSHA1(encoded, qiao.qiniu.sk);
     var encoded_signed = hash.toString(CryptoJS.enc.Base64);
-    console.log(encoded_signed);
 
     //SETP 5
     var upload_token = qiao.qiniu.ak + ":" + qiao.encode.safe64(encoded_signed) + ":" + encoded;
     return upload_token;
 };
+qiao.qiniu.url = function(key){
+	return qiao.qiniu.pr + qiao.qiniu.file;
+};
 
+// qiniu encode
 qiao.encode = {};
 qiao.encode.utf16to8 = function(str){
     var out, i, len, c;
@@ -348,4 +398,29 @@ qiao.encode.safe64 = function(base64){
     base64 = base64.replace(/\+/g, "-");
     base64 = base64.replace(/\//g, "_");
     return base64;
+};
+
+// face pp
+qiao.facepp = {
+	ak : '3bbeeac39cd5e8600d2cb05ac97f15fd',
+	sk : '4lf9qM6e7GVLVAfKYITYx9R7GX6_5Taa'
+};
+qiao.facepp.do = function(options){
+	var url = options.url; 
+	var attr = options.attr || 'gender,age';
+	var method = options.method || 'detection/detect';
+	var func = options.func;
+    new FacePP(qiao.facepp.ak, qiao.facepp.sk).request(method, {
+      url: url,
+      attribute: attr
+    }, function(err, result) {
+    	qiao.h.closeWaiting();
+		if(err){
+			showRes('识别失败，请重试！');
+			console.log(JSON.stringify(err));
+			return;
+		}
+		  
+		if(func) func(result);
+    });
 };
