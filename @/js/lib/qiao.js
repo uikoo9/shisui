@@ -409,18 +409,16 @@ qiao.facepp.do = function(options){
 	var url = options.url; 
 	var attr = options.attr || 'gender,age';
 	var method = options.method || 'detection/detect';
-	var func = options.func;
+	var success = options.success;
+	var fail = options.fail;
     new FacePP(qiao.facepp.ak, qiao.facepp.sk).request(method, {
       url: url,
       attribute: attr
     }, function(err, result) {
-    	qiao.h.closeWaiting();
 		if(err){
-			showRes('识别失败，请重试！');
-			console.log(JSON.stringify(err));
-			return;
+			fail();
+		}else{
+			success();
 		}
-		  
-		if(func) func(result);
     });
 };

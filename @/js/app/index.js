@@ -36,7 +36,7 @@ function setImg(src){
 function uploadImg(){
 	var src = $('#faceImg').attr('src');
 	if(src){
-		qiao.h.waiting();
+		beginw();
 		
 		var token = qiao.qiniu.uptoken(src);
 		var filename = qiao.qiniu.file;
@@ -62,7 +62,7 @@ function facepp(url){
 	if(url){
 		qiao.facepp.do({
 			url : url,
-			func : function(result){
+			success : function(result){
 				if(result && result.face && result.face.length){
 					var face = result.face[0].attribute;
 					var str = '识别成功！性别：' + (face.gender.value == 'Male' ? '男':'女') + '，年龄：' + face.age.value;
@@ -70,10 +70,22 @@ function facepp(url){
 				}else{
 					showRes('识别失败，请上传包含人脸的图片！');	
 				}
+			},
+			fail : function(){
+				showRes('识别失败，请重试！');
 			}
 		});
 	}
 }
 function showRes(msg){
 	$('#res').text(msg);
+	endw();
+}
+function beginw(){
+	$('#faceBtn').attr('disabled', true);
+	qiao.h.waiting();
+}
+function endw(){
+	qiao.h.closeWaiting();
+	$('#faceBtn').attr('disabled', false);
 }
