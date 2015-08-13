@@ -1,0 +1,18 @@
+.mui-content-padded{
+	margin-top: 50px;
+}
+.face-img{
+	width: 100%;
+}
+.face-img img{
+	display: block;
+	margin: 0 auto;
+}
+.face-btn{
+	width: 100%;
+	margin: 10px;
+}
+.face-btn button{
+	display: block;
+	margin: 0 auto;
+}
