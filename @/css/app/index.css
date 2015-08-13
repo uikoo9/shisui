@@ -18,3 +18,6 @@
 	margin: 10px auto;
 	width: 300px;
 }
+form{
+	display: none;
+}

@@ -10,10 +10,15 @@
 </head>
 <body>
 	<div class="mui-content-padded">
-		<img class="face-img" id="choiceImg"/>
-		<button class="mui-btn mui-btn-primary face-btn" id="choiceBtn">开始识别</button>
+		<img class="face-img" id="faceImg"/>
+		<button class="mui-btn mui-btn-primary face-btn" id="faceBtn">开始识别</button>
 		<p id="res"></p>
 	</div>
+	
+	<form method="post" action="http://upload.qiniu.com/" enctype="multipart/form-data" id="faceForm">
+		<input name="file" type="file" />
+		<input name="token" type="hidden" />
+	</form>
 
 	<script type="text/javascript" src="@/js/lib/hmac-sha1.js"></script>
 	<script type="text/javascript" src="@/js/mui.min.js"></script>
