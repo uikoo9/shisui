@@ -32,7 +32,7 @@ function choiceCamera(){
 	var cmr = plus.camera.getCamera();
 	cmr.captureImage( function ( p ) {
 		plus.io.resolveLocalFileSystemURL( p, function ( entry ) {
-			
+			$('#choiceImg').attr('src', entry.toLocalURL());
 		}, function ( e ) {
 		} );
 	}, function ( e ) {
