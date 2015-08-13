@@ -41,6 +41,7 @@ function uploadImg(){
 	if(src){
 		qiao.h.waiting();
 		
+		console.log(src);
 		$('#faceForm input[name="file"]').val(src);
 		$('#faceForm').submit(function(e){
 			console.log(JSON.stringify(e));
