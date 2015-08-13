@@ -8,6 +8,8 @@ mui.plusReady(function(){
 
 	qiao.on('#choiceImg', 'tap', choiceImg);
 	qiao.on('#choiceBtn', 'tap', facepp);
+	
+	qiao.qiniu.uptoken();
 });
 
 // choice img
