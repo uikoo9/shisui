@@ -37,12 +37,14 @@ function setImg(src){
 function facepp(){
 	var src = $('#choiceImg').attr('src');
 	if(src){
+		qiao.h.waiting();
 	    var api = new FacePP('3bbeeac39cd5e8600d2cb05ac97f15fd', '4lf9qM6e7GVLVAfKYITYx9R7GX6_5Taa');
 	    api.request('detection/detect', {
 //	      url: 'http://7sbn90.com1.z0.glb.clouddn.com/@/img/me/face1.jpg',
 	      img : src,
 	      attribute: 'gender,age'
 	    }, function(err, result) {
+	    	qiao.h.closeWaiting();
 			if(err){
 				showRes('识别失败，请重试！');
 				showRes(JSON.stringify(err))
