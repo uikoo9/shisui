@@ -198,18 +198,21 @@ qiao.qiniu = {
 	scope : 'uikoo9-ueditor',
 };
 qiao.qiniu.deadline = function(){
-	return new Date().getTime() + 60 * 60 * 1000;
+	return Math.round(new Date().getTime() / 1000) + 3600;
 };
 qiao.qiniu.uptoken = function() {
     //SETP 1
-	var putPolicy = '{"scope":"' + qiao.qiniu.scope + '","deadline":' + qiao.qiniu.deadline() + ',"returnBody":"{\"name\":$(fname),\"size\":$(fsize),\"w\":$(imageInfo.width),\"h\":$(imageInfo.height),\"hash\":$(etag)}"}'
+	var putPolicy = '{"scope":"' + qiao.qiniu.scope + '","deadline":' + qiao.qiniu.deadline() + '}';
+	console.log(putPolicy);
 
     //SETP 2
     var encoded = qiao.encode.base64encode(qiao.encode.utf16to8(putPolicy));
+    console.log(encoded);
 
     //SETP 3
     var hash = CryptoJS.HmacSHA1(encoded, qiao.qiniu.sk);
     var encoded_signed = hash.toString(CryptoJS.enc.Base64);
+    console.log(encoded_signed);
 
     //SETP 5
     var upload_token = qiao.qiniu.ak + ":" + qiao.encode.safe64(encoded_signed) + ":" + encoded;
