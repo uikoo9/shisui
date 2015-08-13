@@ -6,6 +6,7 @@ mui.init({
 mui.plusReady(function(){
 	setColor("#f7f7f7");
 	qiao.on('#choiceImg', 'tap', choiceImg);
+	qiao.on('#choiceBtn', 'tap', facepp);
 });
 
 // set color
@@ -13,6 +14,7 @@ function setColor(color){
 	if(mui.os.ios && color) plus.navigator.setStatusBarBackground(color);
 }
 
+// choice img
 function choiceImg(){
 	qiao.h.sheet('选择照片', ['拍照','相册'], function(e){
 		var index = e.index;
@@ -33,4 +35,34 @@ function choicePic(){
 }
 function setImg(src){
 	$('#choiceImg').attr('src', src);
+}
+
+// face pp
+function facepp(){
+	var src = $('#choiceImg').attr('src');
+	if(src){
+	    var api = new FacePP('3bbeeac39cd5e8600d2cb05ac97f15fd', '4lf9qM6e7GVLVAfKYITYx9R7GX6_5Taa');
+	    api.request('detection/detect', {
+//	      url: 'http://7sbn90.com1.z0.glb.clouddn.com/@/img/me/face1.jpg',
+	      img : src,
+	      attribute: 'gender,age'
+	    }, function(err, result) {
+			if(err){
+				showRes('识别失败，请重试！');
+				showRes(JSON.stringify(err))
+				return;
+			}
+			  
+			if(result && result.face && result.face.length){
+				var face = result.face[0].attribute;
+				var str = '性别：' + (face.gender.value == 'Male' ? '男':'女') + '，年龄：' + face.age.value;
+				showRes(str);
+			}
+	    });
+	}else{
+		showRes('请先选择要识别的照片！');
+	}
+}
+function showRes(msg){
+	$('#res').text(msg);
 }
