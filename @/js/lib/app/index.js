@@ -4,15 +4,11 @@ mui.init({
 
 // 所有方法都放到这里
 mui.plusReady(function(){
-	setColor("#f7f7f7");
+	if(mui.os.ios) plus.navigator.setStatusBarBackground('#EFEFF4');	
+
 	qiao.on('#choiceImg', 'tap', choiceImg);
 	qiao.on('#choiceBtn', 'tap', facepp);
 });
-
-// set color
-function setColor(color){
-	if(mui.os.ios && color) plus.navigator.setStatusBarBackground(color);
-}
 
 // choice img
 function choiceImg(){
