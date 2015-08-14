@@ -38,29 +38,34 @@ function setImg(src){
 }
 
 // uploadImg
-var url;
+var url,tsrc;
 function uploadImg(){
 	var src = $('#faceImg').attr('src');
 	if(src){
 		beginw();
 		
-		var token = qiao.qiniu.uptoken(src);
-		var filename = qiao.qiniu.file;
-		qiao.h.upload({
-			url: 'http://upload.qiniu.com/',
-			filepath: src,
-			datas: [
-				{key: 'key', value : filename},
-				{key: 'token', value : token}
-			],
-			success: function(){
-				url = qiao.qiniu.url();
-				facepp();
-			},
-			fail: function(s){
-				showRes('上传文件失败：' + s);
-			}
-		});
+		if(tsrc && tsrc == src && url){
+			facepp();
+		}else{
+			tsrc = src;
+			var token = qiao.qiniu.uptoken(src);
+			var filename = qiao.qiniu.file;
+			qiao.h.upload({
+				url: 'http://upload.qiniu.com/',
+				filepath: src,
+				datas: [
+					{key: 'key', value : filename},
+					{key: 'token', value : token}
+				],
+				success: function(){
+					url = qiao.qiniu.url();
+					facepp();
+				},
+				fail: function(s){
+					showRes('上传文件失败：' + s);
+				}
+			});
+		}
 	}else{
 		showRes('请先选择要识别的照片！');
 	}
