@@ -1,7 +1,7 @@
 {
 	"@platforms": ["android", "iPhone", "iPad"],
 	"id": "H51DC4DDE",/*应用的标识，创建应用时自动生成，勿手动修改*/
-	"name": "face",/*应用名称，程序桌面图标名称*/
+	"name": "识岁",/*应用名称，程序桌面图标名称*/
 	"version": {
 		"name": "0.0.1",/*应用版本名称*/
 		"code": "83"
@@ -18,9 +18,7 @@
 	},
 	"permissions": {
 		
-        "Audio": {
-            "description": "访问麦克风"
-        },
+        
         "Cache": {
             "description": "管理应用缓存"
         },
@@ -31,12 +29,8 @@
             "description": "跟踪调试输出日志"
         },
         
-        "Device": {
-            "description": "访问设备信息"
-        },
-        "Downloader": {
-            "description": "文件下载管理"
-        },
+        
+        
         "Events": {
             "description": "应用扩展事件"
         },
@@ -53,9 +47,7 @@
         
         
         
-        "Storage": {
-            "description": "管理应用本地数据"
-        },
+        
         
         "Uploader": {
             "description": "管理文件上传任务"
@@ -63,9 +55,7 @@
         "Runtime": {
             "description": "访问运行期环境"
         },
-        "XMLHttpRequest": {
-            "description": "跨域网络访问"
-        },
+        
         
         
         
@@ -76,9 +66,7 @@
         "NativeUI":{
         	"description": "原生UI控件"
         },
-        "Navigator":{
-        	"description": "浏览器信息"
-        }
+        "Navigator":{}
 	},
 	"plus": {
 		"splashscreen": {
@@ -101,7 +89,7 @@
 				"keystore": "",/*Android应用打包使用的密钥库文件*/
 				"password": "",/*Android应用打包使用密钥库中证书的密码*/
 				"aliasname": "",/*Android应用打包使用密钥库中证书的别名*/
-				"permissions": ["<uses-permission android:name=\"android.permission.RECORD_AUDIO\"/>","<uses-permission android:name=\"com.android.launcher.permission.INSTALL_SHORTCUT\"/>","<uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\"/>","<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>","<uses-permission android:name=\"android.permission.VIBRATE\"/>","<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>","<uses-permission android:name=\"android.permission.CALL_PHONE\"/>","<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>","<uses-feature android:name=\"android.hardware.camera\"/>","<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>","<uses-permission android:name=\"com.android.launcher.permission.UNINSTALL_SHORTCUT\"/>","<uses-permission android:name=\"android.permission.CAMERA\"/>"]
+				"permissions": ["<uses-feature android:name=\"android.hardware.camera\"/>","<uses-permission android:name=\"com.android.launcher.permission.INSTALL_SHORTCUT\"/>","<uses-permission android:name=\"com.android.launcher.permission.UNINSTALL_SHORTCUT\"/>","<uses-permission android:name=\"android.permission.CAMERA\"/>"]
 			},
 			"orientation": ["portrait-primary"],/*应用支持的方向，portrait-primary：竖屏正方向；portrait-secondary：竖屏反方向；landscape-primary：横屏正方向；landscape-secondary：横屏反方向*/
 			"icons": {
