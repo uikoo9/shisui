@@ -7,6 +7,11 @@ mui.plusReady(function(){
 
 	qiao.on('#faceImg', 'tap', choiceImg);
 	qiao.on('#faceBtn', 'tap', uploadImg);
+	
+	// 退出
+	mui.back = function(){
+		qiao.h.exit();
+	};
 });
 
 // choice img
