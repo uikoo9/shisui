@@ -418,7 +418,7 @@ qiao.facepp.do = function(options){
 		if(err){
 			fail();
 		}else{
-			success();
+			success(result);
 		}
     });
 };

@@ -33,6 +33,7 @@ function setImg(src){
 }
 
 // uploadImg
+var url;
 function uploadImg(){
 	var src = $('#faceImg').attr('src');
 	if(src){
@@ -48,7 +49,8 @@ function uploadImg(){
 				{key: 'token', value : token}
 			],
 			success: function(){
-				facepp(qiao.qiniu.url());
+				url = qiao.qiniu.url();
+				facepp();
 			},
 			fail: function(s){
 				showRes('上传文件失败：' + s);
@@ -58,7 +60,7 @@ function uploadImg(){
 		showRes('请先选择要识别的照片！');
 	}
 }
-function facepp(url){
+function facepp(){
 	if(url){
 		qiao.facepp.do({
 			url : url,
