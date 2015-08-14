@@ -230,8 +230,8 @@ qiao.h.endDown = function(selector){
 qiao.qiniu = {
 	ak : '3YhXI8s0TsYLyEv_irq7aKGsQsmN6i3WoERBtnyY',
 	sk : '9lWh6588LIrQcrMpTagR0f19KV_BcRvtgu5Z1mFU',
-	pr : 'http://7sbnhi.com1.z0.glb.clouddn.com/',
-	scope : 'uikoo9-ueditor',
+	pr : 'http://7xl3r9.com1.z0.glb.clouddn.com/',
+	scope : 'uikoo9-facepp',
 };
 qiao.qiniu.deadline = function(){
 	return Math.round(new Date().getTime() / 1000) + 3600;
